@@ -1,0 +1,268 @@
+{
+  "entities": {
+    "Poll": {
+      "title": "Poll",
+      "description": "A 2-candidate voting poll created in Mudasir Voting Center",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title or topic of the voting contest"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the contest"
+        },
+        "candidate1Name": {
+          "type": "string",
+          "description": "Name of the first candidate"
+        },
+        "candidate1Photo": {
+          "type": "string",
+          "description": "Photo URL or avatar for Candidate 1"
+        },
+        "candidate1Votes": {
+          "type": "number",
+          "description": "Total live votes for candidate 1"
+        },
+        "candidate2Name": {
+          "type": "string",
+          "description": "Name of the second candidate"
+        },
+        "candidate2Photo": {
+          "type": "string",
+          "description": "Photo URL or avatar for Candidate 2"
+        },
+        "candidate2Votes": {
+          "type": "number",
+          "description": "Total live votes for candidate 2"
+        },
+        "totalVotes": {
+          "type": "number",
+          "description": "Sum of candidate1Votes and candidate2Votes"
+        },
+        "expiresAt": {
+          "type": "string",
+          "description": "ISO timestamp when voting ends"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the poll (active, expired, closed)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Creator user id or admin"
+        }
+      },
+      "required": [
+        "title",
+        "candidate1Name",
+        "candidate2Name",
+        "candidate1Votes",
+        "candidate2Votes",
+        "expiresAt",
+        "status"
+      ]
+    },
+    "Vote": {
+      "title": "Vote",
+      "description": "Record of an individual vote cast to prevent double voting",
+      "type": "object",
+      "properties": {
+        "pollId": {
+          "type": "string",
+          "description": "ID of the poll voted in"
+        },
+        "voterId": {
+          "type": "string",
+          "description": "Unique identifier of the voter"
+        },
+        "voterName": {
+          "type": "string",
+          "description": "Name or email of the voter"
+        },
+        "candidateChoice": {
+          "type": "number",
+          "description": "1 for candidate1, 2 for candidate2"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when vote was cast"
+        }
+      },
+      "required": ["pollId", "voterId", "candidateChoice"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered voter or administrator account",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID of user"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number"
+        },
+        "photo": {
+          "type": "string",
+          "description": "Avatar URL"
+        },
+        "bio": {
+          "type": "string",
+          "description": "Biography or profile description"
+        },
+        "city": {
+          "type": "string",
+          "description": "City or location"
+        },
+        "isAdmin": {
+          "type": "boolean",
+          "description": "Administrator flag"
+        },
+        "status": {
+          "type": "string",
+          "description": "Account status"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["email", "name"]
+    },
+    "AdminLog": {
+      "title": "AdminLog",
+      "description": "Audit log for admin manual vote adjustments and events",
+      "type": "object",
+      "properties": {
+        "pollId": {
+          "type": "string",
+          "description": "Associated poll ID"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action details e.g. boosted votes"
+        },
+        "addedToCandidate": {
+          "type": "number",
+          "description": "Candidate 1 or 2"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Number of votes added"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Timestamp of action"
+        }
+      },
+      "required": ["pollId", "action", "timestamp"]
+    },
+    "DashboardBanner": {
+      "title": "DashboardBanner",
+      "description": "Scrollable banner displayed on the user dashboard",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "badge": { "type": "string" },
+        "linkUrl": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "imageUrl"]
+    },
+    "CompanyRule": {
+      "title": "CompanyRule",
+      "description": "Company policy and contest rules added by admin",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "description"]
+    },
+    "SecurityThreat": {
+      "title": "SecurityThreat",
+      "description": "Cyber security threat event or attack intercepted by Croex Shield",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "severity": { "type": "string" },
+        "title": { "type": "string" },
+        "details": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "userAgent": { "type": "string" },
+        "target": { "type": "string" },
+        "payloadExcerpt": { "type": "string" },
+        "actionTaken": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["type", "severity", "title", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/polls/{pollId}": {
+      "schema": {
+        "$ref": "#/entities/Poll"
+      },
+      "description": "Collection of all voting contest polls"
+    },
+    "/polls/{pollId}/votes/{voteId}": {
+      "schema": {
+        "$ref": "#/entities/Vote"
+      },
+      "description": "Individual voter records to guarantee one-vote-per-user per poll"
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profiles and registration details"
+    },
+    "/admin_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/AdminLog"
+      },
+      "description": "Audit log of administrative actions"
+    },
+    "/dashboard_banners/{bannerId}": {
+      "schema": {
+        "$ref": "#/entities/DashboardBanner"
+      },
+      "description": "Scrollable dashboard banner pages"
+    },
+    "/company_info/{infoId}": {
+      "schema": {
+        "$ref": "#/entities/CompanyRule"
+      },
+      "description": "Company privacy policies and contest rules"
+    },
+    "/security_threats/{threatId}": {
+      "schema": {
+        "$ref": "#/entities/SecurityThreat"
+      },
+      "description": "Cyber security threat events and intercepted attacks"
+    }
+  }
+}
+

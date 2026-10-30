@@ -1,0 +1,105 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isValidString(val, maxLen) {
+      return val is string && val.size() <= maxLen;
+    }
+
+    function isValidPoll(data) {
+      return isValidString(data.title, 300)
+        && isValidString(data.candidate1Name, 150)
+        && isValidString(data.candidate2Name, 150)
+        && data.candidate1Votes is number
+        && data.candidate2Votes is number;
+    }
+
+    function isValidVote(data) {
+      return data.candidateChoice in [1, 2]
+        && isValidString(data.pollId, 128)
+        && isValidString(data.voterId, 128);
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Polls collection - allow public reading and listing so voters can view live polls and results
+    match /polls/{pollId} {
+      allow get, list: if true;
+      allow create: if isValidPoll(request.resource.data);
+      allow update: if request.resource.data.candidate1Votes is number
+        && request.resource.data.candidate2Votes is number;
+      allow delete: if true;
+
+      // Subcollection for vote records - individual voter records to guarantee one-vote-per-user per poll
+      match /votes/{voteId} {
+        allow read: if true;
+        allow create: if isValidVote(request.resource.data);
+        allow update, delete: if true;
+      }
+
+      // Subcollection for live cheers and comments
+      match /cheers/{cheerId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Direct cheers collection
+    match /poll_cheers/{cheerId} {
+      allow read, write: if true;
+    }
+
+    // Users collection for registration & user accounts
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.email is string
+        && request.resource.data.email.size() <= 200;
+      allow delete: if true;
+    }
+
+    // OTP records collection
+    match /otps/{otpId} {
+      allow read, write: if true;
+    }
+
+    // Admin audit logs
+    match /admin_logs/{logId} {
+      allow get, list: if true;
+      allow create: if request.resource.data.pollId is string
+        && request.resource.data.action is string;
+      allow update, delete: if true;
+    }
+
+    // Dashboard Banners collection - public read and admin manage
+    match /dashboard_banners/{bannerId} {
+      allow get, list: if true;
+      allow create, update: if request.resource.data.title is string
+        && request.resource.data.imageUrl is string;
+      allow delete: if true;
+    }
+
+    // Company Policy & Rules collection - public read and admin manage
+    match /company_info/{infoId} {
+      allow get, list: if true;
+      allow create, update: if request.resource.data.title is string;
+      allow delete: if true;
+    }
+
+    // Connection testing
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Cyber Security Threats & Intercepted Attack Logs
+    match /security_threats/{threatId} {
+      allow get, list: if true;
+      allow create: if request.resource.data.type is string
+        && request.resource.data.severity is string;
+      allow update, delete: if true;
+    }
+  }
+}
+

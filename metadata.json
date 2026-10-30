@@ -1,0 +1,6 @@
+{
+  "name": "Croex Voting Center",
+  "description": "Real-time 2-candidate live voting system with expiry countdown, shareable contest links, and admin control panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

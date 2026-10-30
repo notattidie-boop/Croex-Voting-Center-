@@ -1,0 +1,39 @@
+{
+  "id": "/",
+  "name": "Croex Voting Center",
+  "short_name": "CroexVote",
+  "description": "Croex Voting Center - Real-time 2-candidate live voting platform with offline support and instant 1-tap voting.",
+  "theme_color": "#070910",
+  "background_color": "#070910",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "categories": ["social", "utilities", "lifestyle"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/croex-logo-hd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

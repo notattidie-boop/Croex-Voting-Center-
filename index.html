@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Croex Voting Center</title>
+    <meta name="description" content="Real-time 2-candidate live voting system with expiry countdown, shareable contest links, and admin control panel." />
+    <meta property="og:title" content="Croex Voting Center" />
+    <meta property="og:description" content="Real-time 2-candidate live voting system with expiry countdown, shareable contest links, and admin control panel." />
+    <meta property="og:image" content="/croex-logo-hd.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Croex Voting Center" />
+    <meta name="twitter:description" content="Real-time 2-candidate live voting system with expiry countdown, shareable contest links, and admin control panel." />
+    <meta name="twitter:image" content="/croex-logo-hd.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/croex-logo-hd.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#070910" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CroexVote" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Caveat:wght@600;700&family=Cinzel:wght@600;800;900&family=Great+Vibes&family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet" />
+    <script>
+      // Gracefully prevent unhandled WebSocket closure notices in preview sandboxes
+      (function() {
+        try {
+          const _NativeWebSocket = window.WebSocket;
+          if (_NativeWebSocket) {
+            window.WebSocket = function(url, protocols) {
+              const target = new EventTarget();
+              target.binaryType = 'blob';
+              target.readyState = 1; // WebSocket.OPEN
+              target.url = url;
+              target.protocol = '';
+              target.extensions = '';
+              target.bufferedAmount = 0;
+              target.send = function() {};
+              target.close = function() {
+                target.readyState = 3;
+              };
+              setTimeout(() => {
+                try {
+                  target.dispatchEvent(new Event('open'));
+                } catch {}
+              }, 20);
+              return target;
+            };
+            window.WebSocket.CONNECTING = 0;
+            window.WebSocket.OPEN = 1;
+            window.WebSocket.CLOSING = 2;
+            window.WebSocket.CLOSED = 3;
+          }
+        } catch {}
+
+        function isIgnorableNotice(val) {
+          const str = String(val || '').toLowerCase();
+          return (
+            str.includes('websocket') ||
+            str.includes('[vite]') ||
+            str.includes('connection lost') ||
+            str.includes('could not reach cloud firestore backend') ||
+            str.includes('connection failed') ||
+            str.includes("backend didn't respond within 10 seconds") ||
+            str.includes('[code=unavailable]') ||
+            str.includes('the client will operate in offline mode')
+          );
+        }
+
+        const _origConsoleError = console.error;
+        console.error = function(...args) {
+          const str = args.map(a => (a && a.message) || String(a)).join(' ');
+          if (isIgnorableNotice(str)) {
+            return;
+          }
+          _origConsoleError.apply(console, args);
+        };
+
+        const _origConsoleWarn = console.warn;
+        console.warn = function(...args) {
+          const str = args.map(a => (a && a.message) || String(a)).join(' ');
+          if (isIgnorableNotice(str)) {
+            return;
+          }
+          _origConsoleWarn.apply(console, args);
+        };
+
+        window.addEventListener('error', function(event) {
+          const msg = (event && (event.message || (event.error && event.error.message))) || '';
+          if (isIgnorableNotice(msg)) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(event) {
+          const reason = (event && (event.reason && (event.reason.message || String(event.reason)))) || '';
+          if (isIgnorableNotice(reason)) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-50 antialiased selection:bg-indigo-500 selection:text-white">
+    <div id="root">
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 38%, #141926 0%, #070a10 100%); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; text-align: center;">
+        <img src="/croex-logo-hd.png" alt="Croex Voting Center" style="width: 190px; height: 190px; max-width: 72vw; max-height: 72vw; object-fit: contain; margin-bottom: 22px; filter: drop-shadow(0 20px 35px rgba(217, 119, 6, 0.28)); border-radius: 36px;" />
+        <h1 style="font-weight: 900; font-size: 22px; color: #ffffff; margin: 0; letter-spacing: -0.02em;">Croex Voting Center</h1>
+        <p style="font-size: 13px; color: #fbbf24; margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Hanzla Croex Technology</p>
+        <div style="margin-top: 24px; width: 34px; height: 34px; border: 3px solid rgba(251, 191, 36, 0.2); border-top-color: #f59e0b; border-radius: 50%; animation: mvc-spin 0.75s linear infinite;"></div>
+        <style>@keyframes mvc-spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

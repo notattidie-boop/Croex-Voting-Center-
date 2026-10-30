@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-urdu {
+    font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Jameel Noori Nastaleeq', 'Amiri', serif;
+    line-height: 2.1;
+    letter-spacing: -0.01em;
+  }
+  .font-urdu-stylish {
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    line-height: 1.9;
+    letter-spacing: 0;
+  }
+  .font-urdu-heading {
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .UrduText {
+    font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Jameel Noori Nastaleeq', 'Amiri', serif;
+    line-height: 1.8;
+  }
+}
+
+html[lang="ur"] {
+  font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Jameel Noori Nastaleeq', 'Amiri', serif;
+  line-height: 1.95;
+}
+
+html[lang="ur"] h1,
+html[lang="ur"] h2,
+html[lang="ur"] h3 {
+  font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+  line-height: 1.85;
+}
